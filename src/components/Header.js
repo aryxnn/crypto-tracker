@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CryptoState } from '../CryptoContext';
 import AuthModal from './Athentication/AuthModal';
 import { Avatar, Button } from '@material-ui/core';
@@ -8,7 +8,6 @@ import { auth } from '../firebase';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Header = () => {
-  const history = useHistory();
   const { currency, setCurrency, user, setAlert } = CryptoState();
 
   const logOut = () => {
@@ -23,9 +22,10 @@ const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#" onClick={() => history.push("/")}>
+        <Link className="navbar-brand" to="/">
           Crypto Hunter
-        </a>
+        </Link>
+
         <button
           className="navbar-toggler"
           type="button"
@@ -37,23 +37,24 @@ const Header = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link" href="#" onClick={() => history.push("/portfolio")}>
+              <Link className="nav-link" to="/portfolio">
                 Portfolio
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#" onClick={() => history.push("/converter")}>
+              <Link className="nav-link" to="/converter">
                 Converter
-              </a>
+              </Link>
             </li>
             {user && (
               <li className="nav-item">
-                <a className="nav-link" href="#" onClick={() => history.push("/watchlist")}>
+                <Link className="nav-link" to="/watchlist">
                   Watchlist
-                </a>
+                </Link>
               </li>
             )}
           </ul>

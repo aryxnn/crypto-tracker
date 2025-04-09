@@ -2,7 +2,7 @@ import './App.css';
 import Header from './components/Header';
 import Home from './Pages/Home';
 import Watchlist from './Pages/Watchlist';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from './components/Alert';
 import Portfolio from './components/Portfolio';
@@ -24,14 +24,13 @@ function App() {
     <BrowserRouter>
       <div className={classes.App}>
         <Header />
-        <Switch>
-          <Route path='/' component={Home} exact />
-          <Route path='/coins/:id' component={CoinPage} exact />
-          <Route path='/portfolio' component={Portfolio} exact />
-          <Route path='/converter' component={Converter} exact />
-          <Route path="/watchlist" component={Watchlist} exact/>
-
-        </Switch>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/coins/:id' element={<CoinPage />} />
+          <Route path='/portfolio' element={<Portfolio />} />
+          <Route path='/converter' element={<Converter />} />
+          <Route path='/watchlist' element={<Watchlist />} />
+        </Routes>
       </div>
       <Alert />
     </BrowserRouter>

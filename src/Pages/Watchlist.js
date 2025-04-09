@@ -5,7 +5,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { coinWithComa } from '../components/Banner/Corousels';
 
-const WatchlistPage = () => {
+const Watchlist = () => {
   const { user, watchlist, coins, symbol, setAlert } = CryptoState();
 
   const removeFromWatchlist = async (coin) => {
@@ -62,4 +62,4 @@ const WatchlistPage = () => {
   );
 };
 
-export default WatchlistPage;
+export default Watchlist;

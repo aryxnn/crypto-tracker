@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // ✅ useNavigate instead of useHistory
 import { CryptoState } from '../CryptoContext';
 import { coinWithComa } from './Banner/Corousels';
 import { Pagination } from '@material-ui/lab';
@@ -9,7 +9,7 @@ const CoinTable = () => {
   const { currency, symbol, coins, loading, fetchCoins } = CryptoState();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate(); // ✅ useNavigate hook
 
   useEffect(() => {
     fetchCoins();
@@ -64,8 +64,7 @@ const CoinTable = () => {
                       <tr
                         key={row.name}
                         style={{ cursor: 'pointer' }}
-                        onClick={() => history.push(`/coins/${row.id}`)}
-
+                        onClick={() => navigate(`/coins/${row.id}`)} // ✅ use navigate instead of history.push
                         className="rounded-3"
                       >
                         <td className="d-flex align-items-center gap-3">
@@ -100,16 +99,15 @@ const CoinTable = () => {
         </div>
 
         <div className="d-flex justify-content-center mt-4">
-        <Pagination
-  count={Math.ceil(handleSearch()?.length / 10)} // ✅ returns a number
-  onChange={(_, value) => {
-    setPage(value);
-    window.scroll(0, 450);
-  }}
-  variant="outlined"
-  color="primary"
-/>
-
+          <Pagination
+            count={Math.ceil(handleSearch()?.length / 10)}
+            onChange={(_, value) => {
+              setPage(value);
+              window.scroll(0, 450);
+            }}
+            variant="outlined"
+            color="primary"
+          />
         </div>
       </div>
     </div>

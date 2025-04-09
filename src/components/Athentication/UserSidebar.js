@@ -65,51 +65,64 @@ export default function UserSidebar() {
   const { user, setAlert } = CryptoState();
 
   const logOut = () => {
-    signOut(auth);
-    setAlert({
-      open: true,
-      type: "success",
-      message: "Logout Successfully!"
-    });
-    toggleDrawer("right", false);
+    signOut(auth)
+      .then(() => {
+        setAlert({
+          open: true,
+          type: "success",
+          message: "Logout Successfully!",
+        });
+        setState({ right: false }); // Close the drawer
+      })
+      .catch((error) => {
+        setAlert({
+          open: true,
+          type: "error",
+          message: error.message,
+        });
+      });
   };
 
   return (
-    <div>
-      <Avatar
-        onClick={toggleDrawer("right", true)}
-        className={classes.avatarTrigger}
-        src={user.photoURL}
-        alt={user.displayName || user.email}
-      />
+    <>
+      {user && (
+        <>
+          <Avatar
+            onClick={toggleDrawer("right", true)}
+            className={classes.avatarTrigger}
+            src={user.photoURL}
+            alt={user.displayName || user.email}
+          />
 
-      <Drawer
-        anchor="right"
-        open={state["right"]}
-        onClose={toggleDrawer("right", false)}
-      >
-        <Box className={classes.container}>
-          <div className={classes.profile}>
-            <Avatar
-              className={classes.picture}
-              src={user.photoURL}
-              alt={user.displayName || user.email}
-            />
-            <Typography variant="h6" align="center" style={{ fontWeight: 600 }}>
-              {user.displayName || user.email}
-            </Typography>
-            <Divider style={{ width: "100%" }} />
-          </div>
-
-          <Button
-            variant='contained'
-            className={classes.logout}
-            onClick={logOut}
+          <Drawer
+            anchor="right"
+            open={state["right"]}
+            onClose={toggleDrawer("right", false)}
           >
-            Log Out
-          </Button>
-        </Box>
-      </Drawer>
-    </div>
+            <Box className={classes.container}>
+              <div className={classes.profile}>
+                <Avatar
+                  className={classes.picture}
+                  src={user.photoURL}
+                  alt={user.displayName || user.email}
+                />
+                <Typography variant="h6" align="center" style={{ fontWeight: 600 }}>
+                  {user.displayName || user.email}
+                </Typography>
+                <Divider style={{ width: "100%" }} />
+              </div>
+
+              <Button
+                variant="contained"
+                className={classes.logout}
+                onClick={logOut}
+              >
+                Log Out
+              </Button>
+            </Box>
+          </Drawer>
+        </>
+      )}
+    </>
   );
 }
